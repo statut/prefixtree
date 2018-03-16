@@ -1,7 +1,6 @@
 package org.test.prefixtree.service;
 
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.test.prefixtree.tree.Node;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 @Service
 public class PrefixTreeWordSearchService implements WordSearchService {
@@ -28,20 +26,20 @@ public class PrefixTreeWordSearchService implements WordSearchService {
     @Override
     public Collection<String> findWords(String prefix) {
         Node current = tree;
-        String commonPrefix = StringUtils.EMPTY;
+        StringBuilder commonPrefix = new StringBuilder();
         char[] symbols = prefix.toCharArray();
-        List<String> words = Collections.synchronizedList(new ArrayList<>());
+        List<String> words = new ArrayList<>();
         for (int i = 0; i < symbols.length; i++) {
             if (current == null) {
                 return Collections.emptyList();
             }
             current = current.getChilds().get(symbols[i]);
-            commonPrefix += symbols[i];
+            commonPrefix.append(symbols[i]);
             if (i + 1 == prefix.length()) {
                 break;
             }
         }
-        collectWords(current, commonPrefix, words);
+        collectWords(current, commonPrefix.toString(), words);
         return words;
     }
 
