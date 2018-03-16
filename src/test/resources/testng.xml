@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="test" annotations="JDK" time-out="2000">
+
+    <test name="test" verbose="10" annotations="JDK" time-out="8000">
+        <packages>
+            <package name="org.test.prefixtree.service"/>
+        </packages>
+    </test>
+
+</suite>
